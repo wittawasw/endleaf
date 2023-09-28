@@ -8,5 +8,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
+  scope module: 'endleaf' do
+    get '/pages/:page', to: 'pages#show', as: :page
+  end
+
   get '/pages/:page', to: 'endleaf/pages#show', as: :endleaf_pages_page
 end
