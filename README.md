@@ -10,13 +10,6 @@ gem "endleaf"
 
 ## Usage
 - Use with Ruby on Rails only.
-- Add routes to `config/routes.rb`
-
-```ruby
-scope module: 'endleaf' do
-  get '/pages/:page', to: 'pages#show', as: :page
-end
-```
 - Create pages in `app/views/pages` with filenames corresponding to their routes.
 
 ```ruby
