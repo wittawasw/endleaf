@@ -1,0 +1,17 @@
+/.bundle/
+/doc/
+/log/*.log
+/pkg/
+/tmp/
+/test/dummy/db/*.sqlite3
+/test/dummy/db/*.sqlite3-*
+/test/dummy/log/*.log
+/test/dummy/storage/
+/test/dummy/tmp/
+
+# ignore dummy public
+/test/dummy/public/
+!/test/dummy/public/404.html
+!/test/dummy/public/422.html
+!/test/dummy/public/500.html
+!/test/dummy/public/favicon.ico
