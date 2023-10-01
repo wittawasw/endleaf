@@ -19,6 +19,6 @@ Rails.application.routes.draw do
   # Use scope and constraints to achieve routes into sub directories
   scope "/pages", constraints: { path: /pages\/.*/ } do
     # Route to the Endleaf::PagesController with the "show" action
-    get "*page", to: "endleaf/pages#show", format: false, as: :endleaf_pages_page
+    get "*page", to: "endleaf/pages#show", as: :endleaf_pages_page
   end
 end
