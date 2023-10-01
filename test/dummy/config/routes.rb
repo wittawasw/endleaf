@@ -8,9 +8,17 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-  scope module: 'endleaf' do
-    get '/pages/:page', to: 'pages#show', as: :page
-  end
+  # Simple specific routes
+  # get "/pages/:page", to: "endleaf/pages#show", as: :endleaf_pages_page
 
-  get '/pages/:page', to: 'endleaf/pages#show', as: :endleaf_pages_page
+  # Scope with module
+  # scope module: "endleaf" do
+  #   get "/pages/:page", to: "pages#show", as: :endleaf_pages_page
+  # end
+
+  # Use scope and constraints to achieve routes into sub directories
+  scope "/pages", constraints: { path: /pages\/.*/ } do
+    # Route to the Endleaf::PagesController with the "show" action
+    get "*page", to: "endleaf/pages#show", format: false, as: :endleaf_pages_page
+  end
 end

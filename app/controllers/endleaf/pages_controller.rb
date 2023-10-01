@@ -3,7 +3,10 @@ module Endleaf
     before_action :set_layout
 
     def show
-      render template: "pages/#{params[:page]}"
+      path_segments = params[:page].split('/')
+      view_path = path_segments.join('/')
+
+      render template: "pages/#{view_path}"
     end
 
     private
