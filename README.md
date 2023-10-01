@@ -10,14 +10,20 @@ gem "endleaf"
 
 ## Usage
 - Use with Ruby on Rails only.
+- Create pages in `app/views/pages` with filenames corresponding to their routes.
 - Add routes to `config/routes.rb`
 
 ```ruby
+# Simple usage
 scope module: 'endleaf' do
   get '/pages/:page', to: 'pages#show', as: :page
 end
+
+# Use scope and constraints to achieve routes into sub directories
+scope "/pages", constraints: { path: /pages\/.*/ } do
+  get "*page", to: "endleaf/pages#show"
+end
 ```
-- Create pages in `app/views/pages` with filenames corresponding to their routes.
 
 ```ruby
 # can be used in specific routes e.g. homepage
