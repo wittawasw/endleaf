@@ -12,7 +12,7 @@ module Endleaf
     private
 
     def set_layout
-      self.class.layout('endleaf')
+      self.class.layout(Endleaf::Config::DEFAULT_LAYOUT)
     end
   end
 end
