@@ -1,11 +1,16 @@
 namespace :endleaf do
   namespace :render do
-    desc 'Render and save static pages as HTML'
+    desc "Render and save static pages as HTML"
 
-    task :generate_html => :environment do
+    task :generate_html, [:path, :layout, :output] => :environment do |t, args|
       # Manually set the controller path and action name
-      controller_path = 'endleaf/pages'
-      action_name = 'show'
+      controller_path = "endleaf/pages"
+      action_name = "show"
+
+      # Set static pages directory and layout
+      page_path = args[:path]   || Endleaf::Config::DEFAULT_PATH
+      layout    = args[:layout] || Endleaf::Config::DEFAULT_LAYOUT
+      output    = args[:output].to_s
 
       controller = ActionController::Base.new
       controller.request = ActionDispatch::Request.new({})
@@ -13,11 +18,8 @@ namespace :endleaf do
       # Set the controller path and action name
       controller.params = { controller: controller_path, action: action_name }
 
-      # Set static pages directory
-      pages_dir = "pages"
-
       # Define the directory containing your static pages within the engine
-      pages_directory = Rails.root.join("app", "views", pages_dir)
+      pages_directory = Rails.root.join("app", "views", page_path)
 
       # Supported template extensions
       template_extensions = %w[html.erb erb html.haml haml html.slim slim]
@@ -33,18 +35,18 @@ namespace :endleaf do
         filename = File.basename(file, '.*')
 
         # Construct the absolute path to the template file
-        template_path = "#{pages_dir}/#{relative_path.sub(/\.(#{template_extensions.join('|')})$/, '')}"
+        template_path = "#{page_path}/#{relative_path.sub(/\.(#{template_extensions.join('|')})$/, '')}"
         puts "template: #{template_path}"
 
         # Render the page using the controller's render_to_string method
         html_content = controller.render_to_string(
           template: template_path,
-          layout: "endleaf"
+          layout: layout
         )
 
         # Define the path to save the HTML file in the public directory
         # Modify save_path logic to generate 'example/index.html' format
-        save_path = Rails.root.join('public', "#{relative_path.sub(/\.html\.erb$/, '')}/index.html")
+        save_path = Rails.root.join('public', output, "#{relative_path.sub(/\.html\.erb$/, '')}/index.html")
 
         # Create directories if they don't exist
         FileUtils.mkdir_p(File.dirname(save_path))

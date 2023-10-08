@@ -23,6 +23,13 @@ end
 scope "/pages", constraints: { path: /pages\/.*/ } do
   get "*page", to: "endleaf/pages#show"
 end
+
+# With custom path and layout
+# path:   app/views/posts
+# layout: app/views/layouts/posts.html.erb
+scope "/posts", constraints: { path: /posts\/.*/ } do
+  get "*page", to: "endleaf/pages#show", as: :endleaf_posts_post, defaults: { path: "posts", layout: "posts" }
+end
 ```
 
 ```ruby
@@ -38,6 +45,14 @@ get  'endleaf/pages#show' , page: 'about'
 
 ```shell
 bundle exec rake endleaf:render:generate_html
+
+# custom path, layout, output with variables [path,layout,output]
+# Example:
+# path: app/views/posts
+# layout: app/views/layouts/posts.html.erb
+# output: public/static/posts
+ bundle exec rake endleaf:render:generate_html\[posts,posts,static\/posts\]
+
 ```
 
 
