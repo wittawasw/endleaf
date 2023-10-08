@@ -21,4 +21,9 @@ Rails.application.routes.draw do
     # Route to the Endleaf::PagesController with the "show" action
     get "*page", to: "endleaf/pages#show", as: :endleaf_pages_page
   end
+
+  scope "/posts", constraints: { path: /posts\/.*/ } do
+    # Route to the Endleaf::PagesController with custom path and layout
+    get "*page", to: "endleaf/pages#show", as: :endleaf_posts_post, defaults: { path: "posts", layout: "posts" }
+  end
 end
